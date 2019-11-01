@@ -43,8 +43,28 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     }
 
     @IBAction func btnLeftClick() {
+        if (WCSession.default.isReachable) {
+            print("phone reachable")
+            let message = ["moveDirection": "left"]
+            WCSession.default.sendMessage(message, replyHandler: nil)
+            // output a debug message to the console
+            print("sent move left to phone")
+        }
+        else {
+            print("WATCH: Cannot reach phone")
+        }
     }
     
     @IBAction func btnRightClick() {
+        if (WCSession.default.isReachable) {
+            print("phone reachable")
+            let message = ["moveDirection": "right"]
+            WCSession.default.sendMessage(message, replyHandler: nil)
+            // output a debug message to the console
+            print("sent move right to phone")
+        }
+        else {
+            print("WATCH: Cannot reach phone")
+        }
     }
 }

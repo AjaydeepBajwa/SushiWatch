@@ -23,6 +23,14 @@ class GameScene: SKScene, WCSessionDelegate {
         
     }
     
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+        DispatchQueue.main.async {
+            print("Message recieved from Watch")
+            self.moveDirection = message["moveDirection"] as! String
+            self.moveCat()
+        }
+    }
+    
     
     let cat = SKSpriteNode(imageNamed: "character1")
     let sushiBase = SKSpriteNode(imageNamed:"roll")
@@ -32,12 +40,15 @@ class GameScene: SKScene, WCSessionDelegate {
     let SUSHI_PIECE_GAP:CGFloat = 80
     var catPosition = "left"
     
+    
     // Show life and score labels
     let lifeLabel = SKLabelNode(text:"Lives: ")
     let scoreLabel = SKLabelNode(text:"Score: ")
     
     var lives = 5
     var score = 0
+    
+    var moveDirection = "left"
     
     
     func spawnSushi() {
@@ -134,53 +145,7 @@ class GameScene: SKScene, WCSessionDelegate {
     }
     
     public func moveCat(){
-        
-    }
-    
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        
-        // This is the shortcut way of saying:
-        //      let mousePosition = touches.first?.location
-        //      if (mousePosition == nil) { return }
-        guard let mousePosition = touches.first?.location(in: self) else {
-            return
-        }
-
-        print(mousePosition)
-        
-        // ------------------------------------
-        // MARK: UPDATE THE SUSHI TOWER GRAPHICS
-        //  When person taps mouse,
-        //  remove a piece from the tower & redraw the tower
-        // -------------------------------------
-        let pieceToRemove = self.sushiTower.first
-        if (pieceToRemove != nil) {
-            // SUSHI: hide it from the screen & remove from game logic
-            pieceToRemove!.removeFromParent()
-            self.sushiTower.remove(at: 0)
-            
-            // SUSHI: loop through the remaining pieces and redraw the Tower
-            for piece in sushiTower {
-                piece.position.y = piece.position.y - SUSHI_PIECE_GAP
-            }
-            
-            // To make the tower inifnite, then ADD a new piece
-            self.spawnSushi()
-        }
-        
-        // ------------------------------------
-        // MARK: SWAP THE LEFT & RIGHT POSITION OF THE CAT
-        //  If person taps left side, then move cat left
-        //  If person taps right side, move cat right
-        // -------------------------------------
-        
-        // 1. detect where person clicked
-        let middleOfScreen  = self.size.width / 2
-        if (mousePosition.x < middleOfScreen) {
-            print("TAP LEFT")
-            // 2. person clicked left, so move cat left
+        if self.moveDirection == "left" {
             cat.position = CGPoint(x:self.size.width*0.25, y:100)
             
             // change the cat's direction
@@ -189,11 +154,8 @@ class GameScene: SKScene, WCSessionDelegate {
             
             // save cat's position
             self.catPosition = "left"
-            
         }
-        else {
-            print("TAP RIGHT")
-            // 2. person clicked right, so move cat right
+        if self.moveDirection == "right"{
             cat.position = CGPoint(x:self.size.width*0.85, y:100)
             
             // change the cat's direction
@@ -202,8 +164,8 @@ class GameScene: SKScene, WCSessionDelegate {
             
             // save cat's position
             self.catPosition = "right"
-        }
 
+        }
         // ------------------------------------
         // MARK: ANIMATION OF PUNCHING CAT
         // -------------------------------------
@@ -255,10 +217,84 @@ class GameScene: SKScene, WCSessionDelegate {
                 self.scoreLabel.text = "Score: \(self.score)"
             }
         }
-        
+            
         else {
             print("Sushi tower is empty!")
         }
+    }
+    
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        
+        
+        // This is the shortcut way of saying:
+        //      let mousePosition = touches.first?.location
+        //      if (mousePosition == nil) { return }
+        guard let mousePosition = touches.first?.location(in: self) else {
+            return
+        }
+
+        print(mousePosition)
+        
+        // ------------------------------------
+        // MARK: UPDATE THE SUSHI TOWER GRAPHICS
+        //  When person taps mouse,
+        //  remove a piece from the tower & redraw the tower
+        // -------------------------------------
+        let pieceToRemove = self.sushiTower.first
+        if (pieceToRemove != nil) {
+            // SUSHI: hide it from the screen & remove from game logic
+            pieceToRemove!.removeFromParent()
+            self.sushiTower.remove(at: 0)
+            
+            // SUSHI: loop through the remaining pieces and redraw the Tower
+            for piece in sushiTower {
+                piece.position.y = piece.position.y - SUSHI_PIECE_GAP
+            }
+            
+            // To make the tower inifnite, then ADD a new piece
+            self.spawnSushi()
+        }
+        
+        // ------------------------------------
+        // MARK: SWAP THE LEFT & RIGHT POSITION OF THE CAT
+        //  If person taps left side, then move cat left
+        //  If person taps right side, move cat right
+        // -------------------------------------
+        
+        // 1. detect where person clicked
+        let middleOfScreen  = self.size.width / 2
+        if (mousePosition.x < middleOfScreen) {
+            print("TAP LEFT")
+            self.moveDirection = "left"
+            self.moveCat()
+            // 2. person clicked left, so move cat left
+//            cat.position = CGPoint(x:self.size.width*0.25, y:100)
+//
+//            // change the cat's direction
+//            let facingRight = SKAction.scaleX(to: 1, duration: 0)
+//            self.cat.run(facingRight)
+//
+//            // save cat's position
+//            self.catPosition = "left"
+            
+        }
+        else {
+            print("TAP RIGHT")
+            self.moveDirection = "right"
+            self.moveCat()
+            // 2. person clicked right, so move cat right
+//            cat.position = CGPoint(x:self.size.width*0.85, y:100)
+//
+//            // change the cat's direction
+//            let facingLeft = SKAction.scaleX(to: -1, duration: 0)
+//            self.cat.run(facingLeft)
+//
+//            // save cat's position
+//            self.catPosition = "right"
+        }
+
+       
         
     }
  
