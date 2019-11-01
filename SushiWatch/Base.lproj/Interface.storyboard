@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder.WatchKit.Storyboard" version="3.0" toolsVersion="14460.31" targetRuntime="watchKit" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="AgC-eL-Hgc">
+    <device id="watch38" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="watchOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14460.20"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="14460.16"/>
+    </dependencies>
+    <scenes>
+        <!--Interface Controller-->
+        <scene sceneID="aou-V4-d1y">
+            <objects>
+                <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="SushiWatch" customModuleProvider="target">
+                    <items>
+                        <label alignment="center" text="SushiWatch" textAlignment="center" id="bx4-yG-YDh"/>
+                        <group width="1" height="35" alignment="left" id="dfe-Ut-v05">
+                            <items>
+                                <button width="0.40000000000000002" height="1" alignment="left" backgroundImage="left" id="ss3-i8-6Jh">
+                                    <connections>
+                                        <action selector="btnLeftClick" destination="AgC-eL-Hgc" id="vhU-bt-Kpz"/>
+                                    </connections>
+                                </button>
+                                <button width="0.40000000000000002" height="1" alignment="right" backgroundImage="right" id="lFS-iO-vKm">
+                                    <connections>
+                                        <action selector="btnRightClick" destination="AgC-eL-Hgc" id="ob0-yX-rG0"/>
+                                    </connections>
+                                </button>
+                            </items>
+                        </group>
+                    </items>
+                </controller>
+            </objects>
+            <point key="canvasLocation" x="159" y="146"/>
+        </scene>
+    </scenes>
+</document>
