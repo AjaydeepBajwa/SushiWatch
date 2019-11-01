@@ -8,8 +8,21 @@
 
 import SpriteKit
 import GameplayKit
+import WatchConnectivity
 
-class GameScene: SKScene {
+class GameScene: SKScene, WCSessionDelegate {
+    func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
+        
+    }
+    
+    func sessionDidBecomeInactive(_ session: WCSession) {
+        
+    }
+    
+    func sessionDidDeactivate(_ session: WCSession) {
+        
+    }
+    
     
     let cat = SKSpriteNode(imageNamed: "character1")
     let sushiBase = SKSpriteNode(imageNamed:"roll")
@@ -59,6 +72,24 @@ class GameScene: SKScene {
     }
     
     override func didMove(to view: SKView) {
+        
+        
+        DispatchQueue.main.async {
+            // 1. Check if phone supports WCSessions
+            print("Phone view loaded")
+            if WCSession.isSupported() {
+               print("Phone supports WCSession")
+                WCSession.default.delegate = self
+                WCSession.default.activate()
+               print("Session Activated")
+            }
+            else {
+                print("Phone does not support WCSession")
+            }
+        }
+        
+        
+        
         // add background
         let background = SKSpriteNode(imageNamed: "background")
         background.size = self.size
@@ -102,6 +133,9 @@ class GameScene: SKScene {
     override func update(_ currentTime: TimeInterval) {
     }
     
+    public func moveCat(){
+        
+    }
     
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
