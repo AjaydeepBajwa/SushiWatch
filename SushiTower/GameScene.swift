@@ -44,11 +44,15 @@ class GameScene: SKScene, WCSessionDelegate {
     // Show life and score labels
     let lifeLabel = SKLabelNode(text:"Lives: ")
     let scoreLabel = SKLabelNode(text:"Score: ")
+    let secondsRemainingLabel = SKLabelNode(text: "25")
+    var timeBar:SKSpriteNode!
     
     var lives = 5
     var score = 0
     
     var moveDirection = "left"
+    var updateCount = 1
+    var SecondsRemaining = 25
     
     
     func spawnSushi() {
@@ -68,8 +72,6 @@ class GameScene: SKScene, WCSessionDelegate {
             sushi.position.x = self.size.width*0.5
         }
         else {
-            // OPTION 1 syntax: let previousSushi = sushiTower.last
-            // OPTION 2 syntax:
             let previousSushi = sushiTower[self.sushiTower.count - 1]
             sushi.position.y = previousSushi.position.y + SUSHI_PIECE_GAP
             sushi.position.x = self.size.width*0.5
@@ -120,18 +122,34 @@ class GameScene: SKScene, WCSessionDelegate {
         self.buildTower()
         
         // Game labels
-        self.scoreLabel.position.x = 100
-        self.scoreLabel.position.y = size.height - 100
+        self.scoreLabel.position.x = 60
+        self.scoreLabel.position.y = size.height - 150
         self.scoreLabel.fontName = "Avenir"
-        self.scoreLabel.fontSize = 40
+        self.scoreLabel.fontSize = 30
+        self.scoreLabel.fontColor = UIColor.green
+        self.scoreLabel.zPosition = 19
         addChild(scoreLabel)
         
         // Life label
-        self.lifeLabel.position.x = 100
-        self.lifeLabel.position.y = size.height - 150
+        self.lifeLabel.position.x = 60
+        self.lifeLabel.position.y = size.height - 200
         self.lifeLabel.fontName = "Avenir"
-        self.lifeLabel.fontSize = 40
+        self.lifeLabel.fontSize = 30
+        self.lifeLabel.zPosition = 18
+        self.lifeLabel.fontColor = UIColor.green
         addChild(lifeLabel)
+        
+        self.timeBar = SKSpriteNode(imageNamed: "timeBar")
+        self.timeBar.position = CGPoint(x: self.size.width/2, y: self.size.height - 80)
+        self.timeBar.zPosition = 20
+        addChild(timeBar)
+        
+        self.secondsRemainingLabel.position = CGPoint(x: 105, y: self.size.height - 90)
+        self.secondsRemainingLabel.fontName = "Avenir"
+        self.secondsRemainingLabel.fontSize = 30
+        self.secondsRemainingLabel.zPosition = 22
+        self.secondsRemainingLabel.fontColor = UIColor.white
+        addChild(secondsRemainingLabel)
     }
     
     func buildTower() {
@@ -142,6 +160,16 @@ class GameScene: SKScene, WCSessionDelegate {
     
     
     override func update(_ currentTime: TimeInterval) {
+        self.updateCount = self.updateCount + 1
+        if (self.updateCount%60 == 0)&&(self.SecondsRemaining > 0) {
+            self.SecondsRemaining = self.SecondsRemaining - 1
+            print("Seconds: \(self.SecondsRemaining)")
+            self.secondsRemainingLabel.text = "\(self.SecondsRemaining)"
+            self.timeBar.size.width = self.timeBar.size.width - 8
+            self.timeBar.position.x = self.timeBar.position.x - 4
+            
+        }
+    
     }
     
     public func moveCat(){
