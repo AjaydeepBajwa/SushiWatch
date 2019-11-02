@@ -62,7 +62,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 
                 //Hide time remaining label after 2 seconds of recieving message
                 DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                    self.lblTimeRemaining.setHidden(true)
+                    self.lblTimeRemaining.setText("")
                 }
             }
         }

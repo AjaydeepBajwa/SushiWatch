@@ -29,7 +29,7 @@
                                 </button>
                             </items>
                         </group>
-                        <label alignment="center" hidden="YES" text="Label" textAlignment="justified" id="Tut-E1-Cyu">
+                        <label height="17" alignment="center" textAlignment="center" id="Tut-E1-Cyu">
                             <color key="textColor" red="0.88235294119999996" green="0.023529411760000001" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="font" type="system" pointSize="14"/>
                         </label>

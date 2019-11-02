@@ -80,8 +80,8 @@ class GameScene: SKScene, WCSessionDelegate {
     var SecondsRemaining = 25
     //var moreTime = [String]()
     var powerUpCount = 0
-    // Random number between 0 and 20 at which the powerup would be sent to watch
-    var randomNum = Int.random(in: 0...20)
+    // Random number between 5 and 23 at which the powerup would be sent to watch
+    var randomNum = Int.random(in: 5...23)
     
     
     func spawnSushi() {
