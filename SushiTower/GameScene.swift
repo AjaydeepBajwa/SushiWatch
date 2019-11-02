@@ -169,12 +169,17 @@ class GameScene: SKScene, WCSessionDelegate {
             self.timeBar.position.x = self.timeBar.position.x - 4
             self.sendTimeWarningTowatch()
         }
+        if SecondsRemaining == 0 {
+            scene!.view?.isPaused = true
+            self.secondsRemainingLabel.fontColor = UIColor.red
+            self.secondsRemainingLabel.text = "GAME OVER"
+        }
         
     }
     
     public func sendTimeWarningTowatch(){
         
-        if ((self.SecondsRemaining == 15)||(self.SecondsRemaining == 10)||(self.SecondsRemaining == 5)){
+        if ((self.SecondsRemaining == 15)||(self.SecondsRemaining == 10)||(self.SecondsRemaining == 5))||(self.SecondsRemaining == 0){
             if (WCSession.default.isReachable) {
                 print("Watch reachable")
                 let message = ["timeRemaining": self.SecondsRemaining]

@@ -12,7 +12,10 @@ import WatchConnectivity
 
 
 class InterfaceController: WKInterfaceController, WCSessionDelegate {
+    @IBOutlet weak var btnMoveleft: WKInterfaceButton!
     
+    @IBOutlet weak var btnMoveRight: WKInterfaceButton!
+    @IBOutlet weak var lblTimeRemaining: WKInterfaceLabel!
     
     var timeRemaining = 25
     
@@ -38,10 +41,29 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
 
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
 
-            let messageBody = message["timeRemaining"] as! Int
-            //messageLabel.setText(messageBody)
-            self.timeRemaining = messageBody
-            print("WATCH: Got message from Phone = \(messageBody)")
+        let messageBody = message["timeRemaining"] as! Int
+        self.timeRemaining = messageBody
+        print("WATCH: Got message from Phone = \(messageBody)")
+      
+        
+        if messageBody == 0 {
+            self.lblTimeRemaining.setHidden(false)
+            self.lblTimeRemaining.setText("GAME OVER")
+            self.btnMoveleft.setHidden(true)
+            self.btnMoveRight.setHidden(true)
+        }
+        else {
+            self.lblTimeRemaining.setHidden(false)
+            self.lblTimeRemaining.setText("\(messageBody) Seconds Remaining")
+            
+            //Hide time remaining label after 2 seconds of recieving message
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                self.lblTimeRemaining.setHidden(true)
+            }
+        }
+        
+       
+        
         }
     
     override func willActivate() {
