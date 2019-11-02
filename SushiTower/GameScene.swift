@@ -76,22 +76,21 @@ class GameScene: SKScene, WCSessionDelegate {
                 let playerName = message["playerName"] as! String
                 
                 //if self.ref.child("Players")
-//                self.databaseHandle = self.ref.child("ScoreCard").observe(.value) { (snapshot) in
-//                    // when a new value is added under Players
-//                    //let playerName = snapshot.children.value(forKey: "playerName")
-//                    //let playerScore = snapshot.children.value(forKey: "score")
-//                    //self.scoreData.
-//                   // if (snapshot.children.value(forKey: "playerName") == playerName){
-//                        
-//                   // }
-//                    //let
-//                    print(snapshot.children.allObjects)
-//                }
+                self.databaseHandle = self.ref.child("ScoreBoard").observe(.value) { (snapshot) in
+                    // when a new value is added under Players
+                    //let playerName = snapshot.children.value(forKey: "playerName")
+                    //let playerScore = snapshot.children.value(forKey: "score")
+                    //self.scoreData.
+                   // if (snapshot.children.value(forKey: "playerName") == playerName){
+                        
+                   // }
+                   // print(snapshot.children.allObjects)
+                }
 
 //                self.ref.child("Players").child(playerName).childByAutoId().setValue(["score":"\(self.score)"])
-                //self.ref.child("ScoreBoard").setValue(["playerName":"\(playerName)","score":"\(self.score)"])
+                self.ref.child("ScoreBoard").childByAutoId().setValue(["playerName":"\(playerName)","score":"\(self.score)"])
                 //self.ref.child("Players").child(playerName).child("Scores").childByAutoId().setValue(self.score)
-                self.ref.child("ScoreCard").child("\(playerName)").setValue(self.score)
+                //self.ref.child("ScoreCard").child("\(playerName)").setValue(self.score)
             }
         }
     }

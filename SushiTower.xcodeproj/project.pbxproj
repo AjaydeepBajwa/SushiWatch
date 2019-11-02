@@ -26,6 +26,8 @@
 		D40C9EB9236CDB1200BEAB9D /* SushiWatch.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = D40C9E9F236CDB0D00BEAB9D /* SushiWatch.app */; };
 		D40C9EC3236DEB6500BEAB9D /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = D40C9EC2236DEB6500BEAB9D /* GoogleService-Info.plist */; };
 		D4FF15C8236E01E70093282F /* ScoresViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FF15C7236E01E70093282F /* ScoresViewController.swift */; };
+		D4FF15CA236E31A30093282F /* TableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FF15C9236E31A30093282F /* TableViewCell.swift */; };
+		D4FF15D0236E33B60093282F /* ScoreBoard.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4FF15CF236E33B60093282F /* ScoreBoard.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +101,8 @@
 		D40C9EB6236CDB1200BEAB9D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		D40C9EC2236DEB6500BEAB9D /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		D4FF15C7236E01E70093282F /* ScoresViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoresViewController.swift; sourceTree = "<group>"; };
+		D4FF15C9236E31A30093282F /* TableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewCell.swift; sourceTree = "<group>"; };
+		D4FF15CF236E33B60093282F /* ScoreBoard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreBoard.swift; sourceTree = SOURCE_ROOT; };
 		E85F1186022DA55C2231B9A7 /* Pods_SushiTower.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_SushiTower.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -165,6 +169,8 @@
 				0571021F2215F1400064C3E1 /* Info.plist */,
 				D40C9EC2236DEB6500BEAB9D /* GoogleService-Info.plist */,
 				D4FF15C7236E01E70093282F /* ScoresViewController.swift */,
+				D4FF15C9236E31A30093282F /* TableViewCell.swift */,
+				D4FF15CF236E33B60093282F /* ScoreBoard.swift */,
 			);
 			path = SushiTower;
 			sourceTree = "<group>";
@@ -450,6 +456,8 @@
 				057102142215F1400064C3E1 /* GameScene.swift in Sources */,
 				D4FF15C8236E01E70093282F /* ScoresViewController.swift in Sources */,
 				05710228221936ED0064C3E1 /* SushiPiece.swift in Sources */,
+				D4FF15CA236E31A30093282F /* TableViewCell.swift in Sources */,
+				D4FF15D0236E33B60093282F /* ScoreBoard.swift in Sources */,
 				057102162215F1400064C3E1 /* GameViewController.swift in Sources */,
 				0571020E2215F1400064C3E1 /* AppDelegate.swift in Sources */,
 			);
