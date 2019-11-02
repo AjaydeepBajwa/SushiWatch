@@ -66,6 +66,13 @@ class GameScene: SKScene, WCSessionDelegate {
                 self.scene!.view?.isPaused = false
                 
             }
+            
+            if (message.keys.contains("playerName")){
+                //recieve the player name from Watch
+                let playerName = message["playerName"] as! String
+                
+                
+            }
         }
     }
     

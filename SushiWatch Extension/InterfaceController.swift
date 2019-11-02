@@ -158,6 +158,17 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                     self.btnEnterNameOutlet.setTitle("\(userResponse![...indexEndOfText])")
                     print("\(self.btnEnterNameOutlet!)")
                 self.playerName = String(userResponse![...indexEndOfText])
+                
+                if (WCSession.default.isReachable) {
+                    print("phone reachable")
+                    let message = ["playerName": self.playerName]
+                    WCSession.default.sendMessage(message, replyHandler: nil)
+                    // output a debug message to the console
+                    print("sent player name to phone")
+                }
+                else {
+                    print("WATCH: Cannot reach phone")
+                }
             }
         }
     }
