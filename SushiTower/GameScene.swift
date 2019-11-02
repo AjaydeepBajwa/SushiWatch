@@ -80,6 +80,8 @@ class GameScene: SKScene, WCSessionDelegate {
     var SecondsRemaining = 25
     //var moreTime = [String]()
     var powerUpCount = 0
+    // Random number between 0 and 20 at which the powerup would be sent to watch
+    var randomNum = Int.random(in: 0...20)
     
     
     func spawnSushi() {
@@ -215,13 +217,10 @@ class GameScene: SKScene, WCSessionDelegate {
         //Send More time powerup request to Watch
         if (self.powerUpCount < 2){
             
-            if (self.SecondsRemaining == 18)||(self.SecondsRemaining == 8){
+            if (self.SecondsRemaining == self.randomNum){
                 if (WCSession.default.isReachable) {
                     print("Watch reachable")
                     let message = ["moreTime": "10 seconds more?"]
-                    //                WCSession.default.sendMessage(message, replyHandler: { (response) in
-                    //                    self.moreTime.append("Reply: \(response)")
-                    //                })
                     WCSession.default.sendMessage(message, replyHandler: nil)
                     // output a debug message to the console
                     print("Asked watch for more time")
@@ -231,7 +230,10 @@ class GameScene: SKScene, WCSessionDelegate {
                 else {
                     print("WATCH: Cannot reach watch")
                 }
+                // set randomNum to any random number between current secondsRemaining and 0
+                self.randomNum = Int.random(in: 0...self.randomNum)
             }
+    
             
         }
         
