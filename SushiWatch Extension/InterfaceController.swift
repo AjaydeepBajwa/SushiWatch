@@ -20,7 +20,12 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     @IBOutlet weak var btnMoreTimeOutlet: WKInterfaceButton!
     
     @IBOutlet weak var lblGameState: WKInterfaceLabel!
+    
+    @IBOutlet weak var btnEnterNameOutlet: WKInterfaceButton!
+    
+    
     var timeRemaining = 25
+    var playerName = ""
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         
@@ -56,6 +61,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 self.lblTimeRemaining.setText("GAME OVER")
                 self.btnMoveleft.setHidden(true)
                 self.btnMoveRight.setHidden(true)
+                self.btnEnterNameOutlet.setHidden(false)
             }
             else {
                 self.lblTimeRemaining.setHidden(false)
@@ -136,6 +142,26 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
             print("WATCH: Cannot reach phone")
         }
     }
+    
+    @IBAction func btnEnterNameClick() {
+        
+        let suggestedResponses = ["Jen", "Pri", "Aja"]
+        
+        presentTextInputController(withSuggestions: suggestedResponses, allowedInputMode: .plain ) {
+            
+            (results) in
+            
+            if (results != nil && results!.count > 0) {
+                let userResponse = results?.first as? String
+                // Limit the Player Name to Maximum 3 Characters
+                    let indexEndOfText = userResponse!.index(userResponse!.startIndex, offsetBy: 2)
+                    self.btnEnterNameOutlet.setTitle("\(userResponse![...indexEndOfText])")
+                    print("\(self.btnEnterNameOutlet!)")
+                self.playerName = String(userResponse![...indexEndOfText])
+            }
+        }
+    }
+    
     
     @IBAction func btnLeftClick() {
         if (WCSession.default.isReachable) {
