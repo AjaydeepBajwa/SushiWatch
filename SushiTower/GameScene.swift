@@ -71,26 +71,17 @@ class GameScene: SKScene, WCSessionDelegate {
             }
             
             if (message.keys.contains("playerName")){
-                //var gameCount = 1
+
                 //recieve the player name from Watch
                 let playerName = message["playerName"] as! String
                 
                 //if self.ref.child("Players")
                 self.databaseHandle = self.ref.child("ScoreBoard").observe(.value) { (snapshot) in
-                    // when a new value is added under Players
-                    //let playerName = snapshot.children.value(forKey: "playerName")
-                    //let playerScore = snapshot.children.value(forKey: "score")
-                    //self.scoreData.
-                   // if (snapshot.children.value(forKey: "playerName") == playerName){
-                        
-                   // }
-                   // print(snapshot.children.allObjects)
+                
                 }
 
-//                self.ref.child("Players").child(playerName).childByAutoId().setValue(["score":"\(self.score)"])
                 self.ref.child("ScoreBoard").childByAutoId().setValue(["playerName":"\(playerName)","score":"\(self.score)"])
-                //self.ref.child("Players").child(playerName).child("Scores").childByAutoId().setValue(self.score)
-                //self.ref.child("ScoreCard").child("\(playerName)").setValue(self.score)
+            
             }
         }
     }
@@ -118,7 +109,6 @@ class GameScene: SKScene, WCSessionDelegate {
     var moveDirection = "left"
     var updateCount = 1
     var SecondsRemaining = 25
-    //var moreTime = [String]()
     var powerUpCount = 0
     // Random number between 5 and 23 at which the powerup would be sent to watch
     var randomNum = Int.random(in: 5...23)
@@ -358,14 +348,11 @@ class GameScene: SKScene, WCSessionDelegate {
         // -------------------------------------
         
         if (self.sushiTower.count > 0) {
-            // 1. if CAT and STICK are on same side - OKAY, keep going
-            // 2. if CAT and STICK are on opposite sides -- YOU LOSE
             let firstSushi:SushiPiece = self.sushiTower[0]
             let chopstickPosition = firstSushi.stickPosition
             
             if (catPosition == chopstickPosition) {
-                // cat = left && chopstick == left
-                // cat == right && chopstick == right
+     
                 print("Cat Position = \(catPosition)")
                 print("Stick Position = \(chopstickPosition)")
                 print("Conclusion = LOSE")
@@ -375,8 +362,7 @@ class GameScene: SKScene, WCSessionDelegate {
                 self.lifeLabel.text = "Lives: \(self.lives)"
             }
             else if (catPosition != chopstickPosition) {
-                // cat == left && chopstick = right
-                // cat == right && chopstick = left
+          
                 print("Cat Position = \(catPosition)")
                 print("Stick Position = \(chopstickPosition)")
                 print("Conclusion = WIN")
@@ -413,10 +399,6 @@ class GameScene: SKScene, WCSessionDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
-        
-        // This is the shortcut way of saying:
-        //      let mousePosition = touches.first?.location
-        //      if (mousePosition == nil) { return }
         guard let mousePosition = touches.first?.location(in: self) else {
             return
         }
@@ -429,57 +411,19 @@ class GameScene: SKScene, WCSessionDelegate {
         //  remove a piece from the tower & redraw the tower
         // -------------------------------------
         self.removeSushi()
-//        let pieceToRemove = self.sushiTower.first
-//        if (pieceToRemove != nil) {
-//            // SUSHI: hide it from the screen & remove from game logic
-//            pieceToRemove!.removeFromParent()
-//            self.sushiTower.remove(at: 0)
-//
-//            // SUSHI: loop through the remaining pieces and redraw the Tower
-//            for piece in sushiTower {
-//                piece.position.y = piece.position.y - SUSHI_PIECE_GAP
-//            }
-//
-//            // To make the tower inifnite, then ADD a new piece
-//            self.spawnSushi()
-//        }
-        
-        // ------------------------------------
-        // MARK: SWAP THE LEFT & RIGHT POSITION OF THE CAT
-        //  If person taps left side, then move cat left
-        //  If person taps right side, move cat right
-        // -------------------------------------
-        
         // 1. detect where person clicked
         let middleOfScreen  = self.size.width / 2
         if (mousePosition.x < middleOfScreen) {
             print("TAP LEFT")
             self.moveDirection = "left"
             self.moveCat()
-            // 2. person clicked left, so move cat left
-//            cat.position = CGPoint(x:self.size.width*0.25, y:100)
-//
-//            // change the cat's direction
-//            let facingRight = SKAction.scaleX(to: 1, duration: 0)
-//            self.cat.run(facingRight)
-//
-//            // save cat's position
-//            self.catPosition = "left"
-            
+
         }
         else {
             print("TAP RIGHT")
             self.moveDirection = "right"
             self.moveCat()
-            // 2. person clicked right, so move cat right
-//            cat.position = CGPoint(x:self.size.width*0.85, y:100)
-//
-//            // change the cat's direction
-//            let facingLeft = SKAction.scaleX(to: -1, duration: 0)
-//            self.cat.run(facingLeft)
-//
-//            // save cat's position
-//            self.catPosition = "right"
+
         }
         let nodeTouched = atPoint(mousePosition).name
         if (nodeTouched == "highScores") {

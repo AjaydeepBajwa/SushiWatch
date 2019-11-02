@@ -10,6 +10,7 @@ import UIKit
 import FirebaseDatabase
 
 class ScoresViewController: UIViewController, UITableViewDelegate,UITableViewDataSource {
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return scoreList.count
     }
@@ -30,9 +31,8 @@ class ScoresViewController: UIViewController, UITableViewDelegate,UITableViewDat
     
     //Declare Firebase Databse reference
     var ref: DatabaseReference!
-    var scoreData = [String]()
-    var rank = 1
     
+    //Store ScoreBoard Objects(i.e name and score) in ArrayList
     var scoreList = [ScoreBoard]()
     var databaseHandle:DatabaseHandle!
     
@@ -45,8 +45,6 @@ class ScoresViewController: UIViewController, UITableViewDelegate,UITableViewDat
         // initilize firebase referenee
         ref = Database.database().reference()
         
-        //retreive data from database
-       // self.databaseHandle = ref.child("ScoreCard").observe(.childAdded) { (snapshot) in
         self.databaseHandle = ref.child("ScoreBoard").observe(.value) { (snapshot) in
             // when a new value is added under Players
             if snapshot.childrenCount > 0{
