@@ -58,7 +58,7 @@ class ScoresViewController: UIViewController, UITableViewDelegate,UITableViewDat
                     self.scoreList.append(score)
                     
                 }
-                
+                self.scoreList = self.scoreList.sorted(by: { $0.score > $1.score })
                 self.tblScoreBoard.reloadData()
             }
         }
