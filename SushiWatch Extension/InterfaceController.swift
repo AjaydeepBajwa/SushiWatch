@@ -154,10 +154,17 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
             if (results != nil && results!.count > 0) {
                 let userResponse = results?.first as? String
                 // Limit the Player Name to Maximum 3 Characters
+                if ((userResponse!.count) > 3){
                     let indexEndOfText = userResponse!.index(userResponse!.startIndex, offsetBy: 2)
                     self.btnEnterNameOutlet.setTitle("\(userResponse![...indexEndOfText])")
                     print("\(self.btnEnterNameOutlet!)")
-                self.playerName = String(userResponse![...indexEndOfText])
+                    self.playerName = String(userResponse![...indexEndOfText])
+                }
+                else {
+                    self.playerName = userResponse!
+                    self.btnEnterNameOutlet.setTitle("\(userResponse!)")
+                }
+                
                 
                 if (WCSession.default.isReachable) {
                     print("phone reachable")

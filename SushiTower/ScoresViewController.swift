@@ -26,9 +26,13 @@ class ScoresViewController: UIViewController {
         ref = Database.database().reference()
         
         //retreive data from database
-        self.databaseHandle = ref.child("ScoreCard").observe(.childAdded) { (snapshot) in
+       // self.databaseHandle = ref.child("ScoreCard").observe(.childAdded) { (snapshot) in
+        self.databaseHandle = ref.child("Players").observe(.value) { (snapshot) in
             // when a new value is added under Players
-            //let post = snapshot.
+            //let playerName = snapshot.children.value(forKey: "playerName")
+            //let playerScore = snapshot.children.value(forKey: "score")
+            //self.scoreData.
+            print(snapshot.children.allObjects)
         }
     }
     
