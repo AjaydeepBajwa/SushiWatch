@@ -37,11 +37,21 @@ class GameScene: SKScene, WCSessionDelegate {
             
             if (message.keys.contains("moreTimeReply")){
                 //phone accepted more time powerup
-                // add 10 seconds to Time remaining
-                self.SecondsRemaining = self.SecondsRemaining + 10
-                //update timeBar width and position
-                self.timeBar.size.width = self.timeBar.size.width + 100
-                self.timeBar.position.x = self.timeBar.position.x + 50
+                if (self.SecondsRemaining <= 15) {
+                    // add 10 seconds to Time remaining
+                    self.SecondsRemaining = self.SecondsRemaining + 10
+                    //update timeBar width and position
+                    self.timeBar.size.width = self.timeBar.size.width + 100
+                    self.timeBar.position.x = self.timeBar.position.x + 50
+                }
+                else {
+                    // increase seconds remaining to 25
+                    self.SecondsRemaining = 25
+                    //update timeBar width and position
+                    self.timeBar.size.width = 250
+                    self.timeBar.position.x = self.size.width/2
+                }
+               
             }
         }
     }
