@@ -1,0 +1,6 @@
+framework module Pods_SushiWatch_Extension {
+  umbrella header "Pods-SushiWatch Extension-umbrella.h"
+
+  export *
+  module * { export * }
+}

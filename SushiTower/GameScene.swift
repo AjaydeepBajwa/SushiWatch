@@ -12,6 +12,8 @@ import WatchConnectivity
 import FirebaseDatabase
 
 class GameScene: SKScene, WCSessionDelegate {
+
+    
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         
     }
@@ -75,8 +77,8 @@ class GameScene: SKScene, WCSessionDelegate {
 
 //                self.ref.child("Players").child(playerName).childByAutoId().setValue(["score":"\(self.score)"])
                 //self.ref.child("ScoreBoard").setValue(["playerName":"\(playerName)","score":"\(self.score)"])
-                self.ref.child("Players").child(playerName).child("Scores").childByAutoId().setValue(self.score)
-                
+//                self.ref.child("Players").child(playerName).child("Scores").childByAutoId().setValue(self.score)
+                self.ref.child("ScoreCard").childByAutoId().setValue(["playerName":"\(playerName)","score":self.score])
             }
         }
     }
@@ -96,6 +98,7 @@ class GameScene: SKScene, WCSessionDelegate {
     let scoreLabel = SKLabelNode(text:"Score: ")
     let secondsRemainingLabel = SKLabelNode(text: "25")
     var timeBar:SKSpriteNode!
+    var highScoresBtn = SKLabelNode(text: "HighScores")
     
     var lives = 5
     var score = 0
@@ -211,6 +214,13 @@ class GameScene: SKScene, WCSessionDelegate {
         self.secondsRemainingLabel.zPosition = 22
         self.secondsRemainingLabel.fontColor = UIColor.white
         addChild(secondsRemainingLabel)
+        
+        self.highScoresBtn.position = CGPoint(x: self.size.width - 50, y: self.size.height - 150)
+        self.highScoresBtn.name = "highScores"
+        self.highScoresBtn.fontName = "Avenir"
+        self.highScoresBtn.fontSize = 30
+        self.highScoresBtn.fontColor = UIColor.yellow
+        addChild(highScoresBtn)
     }
     
     func buildTower() {
@@ -367,6 +377,24 @@ class GameScene: SKScene, WCSessionDelegate {
         else {
             print("Sushi tower is empty!")
         }
+        self.removeSushi()
+    }
+    
+    public func removeSushi(){
+        let pieceToRemove = self.sushiTower.first
+        if (pieceToRemove != nil) {
+            // SUSHI: hide it from the screen & remove from game logic
+            pieceToRemove!.removeFromParent()
+            self.sushiTower.remove(at: 0)
+            
+            // SUSHI: loop through the remaining pieces and redraw the Tower
+            for piece in sushiTower {
+                piece.position.y = piece.position.y - SUSHI_PIECE_GAP
+            }
+            
+            // To make the tower inifnite, then ADD a new piece
+            self.spawnSushi()
+        }
     }
     
     
@@ -387,20 +415,21 @@ class GameScene: SKScene, WCSessionDelegate {
         //  When person taps mouse,
         //  remove a piece from the tower & redraw the tower
         // -------------------------------------
-        let pieceToRemove = self.sushiTower.first
-        if (pieceToRemove != nil) {
-            // SUSHI: hide it from the screen & remove from game logic
-            pieceToRemove!.removeFromParent()
-            self.sushiTower.remove(at: 0)
-            
-            // SUSHI: loop through the remaining pieces and redraw the Tower
-            for piece in sushiTower {
-                piece.position.y = piece.position.y - SUSHI_PIECE_GAP
-            }
-            
-            // To make the tower inifnite, then ADD a new piece
-            self.spawnSushi()
-        }
+        self.removeSushi()
+//        let pieceToRemove = self.sushiTower.first
+//        if (pieceToRemove != nil) {
+//            // SUSHI: hide it from the screen & remove from game logic
+//            pieceToRemove!.removeFromParent()
+//            self.sushiTower.remove(at: 0)
+//
+//            // SUSHI: loop through the remaining pieces and redraw the Tower
+//            for piece in sushiTower {
+//                piece.position.y = piece.position.y - SUSHI_PIECE_GAP
+//            }
+//
+//            // To make the tower inifnite, then ADD a new piece
+//            self.spawnSushi()
+//        }
         
         // ------------------------------------
         // MARK: SWAP THE LEFT & RIGHT POSITION OF THE CAT
@@ -438,6 +467,15 @@ class GameScene: SKScene, WCSessionDelegate {
 //
 //            // save cat's position
 //            self.catPosition = "right"
+        }
+        let nodeTouched = atPoint(mousePosition).name
+        if (nodeTouched == "highScores") {
+            
+            //Go to High Scores screen/View controller
+            let highScoreSB: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+            let highScoreVC = highScoreSB.instantiateViewController(withIdentifier: "scoresScreen") as! ScoresViewController
+            let currentViewController:UIViewController=UIApplication.shared.keyWindow!.rootViewController!
+            currentViewController.present(highScoreVC, animated: true, completion: nil)
         }
 
        
