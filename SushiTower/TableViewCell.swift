@@ -10,6 +10,7 @@ import UIKit
 
 class TableViewCell: UITableViewCell {
 
+    @IBOutlet weak var lblRank: UILabel!
     @IBOutlet weak var lblName: UILabel!
     @IBOutlet weak var lblScore: UILabel!
     override func awakeFromNib() {

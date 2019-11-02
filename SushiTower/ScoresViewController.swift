@@ -22,6 +22,7 @@ class ScoresViewController: UIViewController, UITableViewDelegate,UITableViewDat
         scoreBoard = scoreList[indexPath.row]
         cell.lblName.text = scoreBoard.name
         cell.lblScore.text = scoreBoard.score
+        cell.lblRank.text = "\(indexPath.row+1)"
         
         return cell
     }
@@ -30,6 +31,7 @@ class ScoresViewController: UIViewController, UITableViewDelegate,UITableViewDat
     //Declare Firebase Databse reference
     var ref: DatabaseReference!
     var scoreData = [String]()
+    var rank = 1
     
     var scoreList = [ScoreBoard]()
     var databaseHandle:DatabaseHandle!
@@ -56,6 +58,7 @@ class ScoresViewController: UIViewController, UITableViewDelegate,UITableViewDat
                     
                     let score = ScoreBoard(name: playerName as! String, score: playerScore as! String)
                     self.scoreList.append(score)
+                   // self.scoreList = self.scoreList.sorted(by: { $0.score > $1.score })
                     
                 }
                 self.scoreList = self.scoreList.sorted(by: { $0.score > $1.score })
