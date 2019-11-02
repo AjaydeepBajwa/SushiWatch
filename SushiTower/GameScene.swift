@@ -24,10 +24,25 @@ class GameScene: SKScene, WCSessionDelegate {
     }
     
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+        
         DispatchQueue.main.async {
-            print("Message recieved from Watch")
-            self.moveDirection = message["moveDirection"] as! String
-            self.moveCat()
+            if (message.keys.contains("moveDirection")){
+                print("Move command recieved from Watch")
+                //set move direction to left/right based on message recieved and call function
+                self.moveDirection = message["moveDirection"] as! String
+                self.moveCat()
+            }
+            
+            
+            
+            if (message.keys.contains("moreTimeReply")){
+                //phone accepted more time powerup
+                // add 10 seconds to Time remaining
+                self.SecondsRemaining = self.SecondsRemaining + 10
+                //update timeBar width and position
+                self.timeBar.size.width = self.timeBar.size.width + 100
+                self.timeBar.position.x = self.timeBar.position.x + 50
+            }
         }
     }
     
@@ -49,7 +64,7 @@ class GameScene: SKScene, WCSessionDelegate {
     
     var lives = 5
     var score = 0
-    
+
     var moveDirection = "left"
     var updateCount = 1
     var SecondsRemaining = 25
@@ -163,15 +178,20 @@ class GameScene: SKScene, WCSessionDelegate {
     override func update(_ currentTime: TimeInterval) {
         self.updateCount = self.updateCount + 1
         if (self.updateCount%60 == 0)&&(self.SecondsRemaining > 0) {
+            //Decrease secomnds remaining by 1 every second/60 frames
             self.SecondsRemaining = self.SecondsRemaining - 1
             print("Seconds: \(self.SecondsRemaining)")
+            //update secondsRemaining Label and timeBar width
             self.secondsRemainingLabel.text = "\(self.SecondsRemaining)"
-            self.timeBar.size.width = self.timeBar.size.width - 8
-            self.timeBar.position.x = self.timeBar.position.x - 4
+            self.timeBar.size.width = self.timeBar.size.width - 10
+            self.timeBar.position.x = self.timeBar.position.x - 5
+            //send Time Warning to watch
             self.sendTimeWarningTowatch()
+            //ask for more time from watch
             self.askMoreTime()
         }
         if SecondsRemaining == 0 {
+            //Pause the Game if seconds remaining = 0 and show "GAME OVER" on phone
             scene!.view?.isPaused = true
             self.secondsRemainingLabel.fontColor = UIColor.red
             self.secondsRemainingLabel.text = "GAME OVER"
@@ -190,7 +210,7 @@ class GameScene: SKScene, WCSessionDelegate {
 //                })
                 WCSession.default.sendMessage(message, replyHandler: nil)
                 // output a debug message to the console
-                print("sent more time request to watch")
+                print("Asked watch for more time")
             }
             else {
                 print("WATCH: Cannot reach watch")
@@ -199,7 +219,7 @@ class GameScene: SKScene, WCSessionDelegate {
     }
     
     public func sendTimeWarningTowatch(){
-        
+        // send time remaining warning to watch at 15,10,5 and 0 seconds remaining
         if ((self.SecondsRemaining == 15)||(self.SecondsRemaining == 10)||(self.SecondsRemaining == 5))||(self.SecondsRemaining == 0){
             if (WCSession.default.isReachable) {
                 print("Watch reachable")
@@ -217,6 +237,7 @@ class GameScene: SKScene, WCSessionDelegate {
     }
     
     public func moveCat(){
+        //move the cat left/right
         if self.moveDirection == "left" {
             cat.position = CGPoint(x:self.size.width*0.25, y:100)
             

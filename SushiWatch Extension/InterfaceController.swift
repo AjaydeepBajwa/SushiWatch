@@ -18,8 +18,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     @IBOutlet weak var lblTimeRemaining: WKInterfaceLabel!
     
     @IBOutlet weak var btnMoreTimeOutlet: WKInterfaceButton!
-    @IBAction func btnMoreTime() {
-    }
+    
     var timeRemaining = 25
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
@@ -90,6 +89,20 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
+    }
+    
+    @IBAction func btnMoreTime() {
+        if (WCSession.default.isReachable) {
+            print("Phone reachable")
+            let message = ["moreTimeReply": "yes"]
+            WCSession.default.sendMessage(message, replyHandler: nil)
+            // output a debug message to the console
+            print("sent more time request to phone")
+        }
+        else {
+            print("WATCH: Cannot reach phone")
+        }
+        self.btnMoreTimeOutlet.setHidden(true)
     }
 
     @IBAction func btnLeftClick() {
