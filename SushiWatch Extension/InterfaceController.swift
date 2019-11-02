@@ -12,6 +12,10 @@ import WatchConnectivity
 
 
 class InterfaceController: WKInterfaceController, WCSessionDelegate {
+    
+    
+    var timeRemaining = 25
+    
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
         
     }
@@ -31,6 +35,14 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
             print("Watch does not support WCSession")
         }
     }
+
+    func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
+
+            let messageBody = message["timeRemaining"] as! Int
+            //messageLabel.setText(messageBody)
+            self.timeRemaining = messageBody
+            print("WATCH: Got message from Phone = \(messageBody)")
+        }
     
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user

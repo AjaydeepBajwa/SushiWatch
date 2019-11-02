@@ -167,9 +167,27 @@ class GameScene: SKScene, WCSessionDelegate {
             self.secondsRemainingLabel.text = "\(self.SecondsRemaining)"
             self.timeBar.size.width = self.timeBar.size.width - 8
             self.timeBar.position.x = self.timeBar.position.x - 4
-            
+            self.sendTimeWarningTowatch()
         }
+        
+    }
     
+    public func sendTimeWarningTowatch(){
+        
+        if ((self.SecondsRemaining == 15)||(self.SecondsRemaining == 10)||(self.SecondsRemaining == 5)){
+            if (WCSession.default.isReachable) {
+                print("Watch reachable")
+                let message = ["timeRemaining": self.SecondsRemaining]
+                WCSession.default.sendMessage(message, replyHandler: nil)
+                // output a debug message to the console
+                print("sent time remaining to watch")
+            }
+            else {
+                print("WATCH: Cannot reach watch")
+            }
+        }
+        
+        
     }
     
     public func moveCat(){
