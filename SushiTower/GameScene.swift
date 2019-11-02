@@ -51,7 +51,7 @@ class GameScene: SKScene, WCSessionDelegate {
                     self.timeBar.size.width = 250
                     self.timeBar.position.x = self.size.width/2
                 }
-               
+               //self.powerUpCount = self.powerUpCount + 1
             }
         }
     }
@@ -78,7 +78,8 @@ class GameScene: SKScene, WCSessionDelegate {
     var moveDirection = "left"
     var updateCount = 1
     var SecondsRemaining = 25
-    var moreTime = [String]()
+    //var moreTime = [String]()
+    var powerUpCount = 0
     
     
     func spawnSushi() {
@@ -193,12 +194,13 @@ class GameScene: SKScene, WCSessionDelegate {
             print("Seconds: \(self.SecondsRemaining)")
             //update secondsRemaining Label and timeBar width
             self.secondsRemainingLabel.text = "\(self.SecondsRemaining)"
-            self.timeBar.size.width = self.timeBar.size.width - 10
+            self.timeBar.size.width = CGFloat(self.SecondsRemaining*10)
             self.timeBar.position.x = self.timeBar.position.x - 5
             //send Time Warning to watch
             self.sendTimeWarningTowatch()
-            //ask for more time from watch
+            //ask for more time from watch (maximum 2 times)
             self.askMoreTime()
+            print("powerUp count: \(self.powerUpCount)")
         }
         if SecondsRemaining == 0 {
             //Pause the Game if seconds remaining = 0 and show "GAME OVER" on phone
@@ -211,21 +213,28 @@ class GameScene: SKScene, WCSessionDelegate {
     
     public func askMoreTime(){
         //Send More time powerup request to Watch
-        if (self.SecondsRemaining == 18)||(self.SecondsRemaining == 8){
-            if (WCSession.default.isReachable) {
-                print("Watch reachable")
-                let message = ["moreTime": "10 seconds more?"]
-//                WCSession.default.sendMessage(message, replyHandler: { (response) in
-//                    self.moreTime.append("Reply: \(response)")
-//                })
-                WCSession.default.sendMessage(message, replyHandler: nil)
-                // output a debug message to the console
-                print("Asked watch for more time")
+        if (self.powerUpCount < 2){
+            
+            if (self.SecondsRemaining == 18)||(self.SecondsRemaining == 8){
+                if (WCSession.default.isReachable) {
+                    print("Watch reachable")
+                    let message = ["moreTime": "10 seconds more?"]
+                    //                WCSession.default.sendMessage(message, replyHandler: { (response) in
+                    //                    self.moreTime.append("Reply: \(response)")
+                    //                })
+                    WCSession.default.sendMessage(message, replyHandler: nil)
+                    // output a debug message to the console
+                    print("Asked watch for more time")
+                    //increase powerUp count by 1
+                    self.powerUpCount = self.powerUpCount + 1
+                }
+                else {
+                    print("WATCH: Cannot reach watch")
+                }
             }
-            else {
-                print("WATCH: Cannot reach watch")
-            }
+            
         }
+        
     }
     
     public func sendTimeWarningTowatch(){
