@@ -19,6 +19,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     
     @IBOutlet weak var btnMoreTimeOutlet: WKInterfaceButton!
     
+    @IBOutlet weak var lblGameState: WKInterfaceLabel!
     var timeRemaining = 25
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
@@ -104,7 +105,23 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
         }
         self.btnMoreTimeOutlet.setHidden(true)
     }
-
+    
+    @IBAction func gesturePause(_ sender: Any) {
+        if (WCSession.default.isReachable) {
+            print("Phone reachable")
+            let message = ["pause": "yes"]
+            WCSession.default.sendMessage(message, replyHandler: nil)
+            // output a debug message to the console
+            print("sent pause request to phone")
+            self.lblGameState.setText("Paused! Swipe to Resume")
+        }
+        else {
+            print("WATCH: Cannot reach phone")
+        }
+    }
+    
+    
+    
     @IBAction func btnLeftClick() {
         if (WCSession.default.isReachable) {
             print("phone reachable")

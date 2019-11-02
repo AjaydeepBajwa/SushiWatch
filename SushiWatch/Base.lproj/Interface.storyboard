@@ -14,7 +14,20 @@
             <objects>
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="SushiWatch" customModuleProvider="target">
                     <items>
-                        <label alignment="center" text="SushiWatch" textAlignment="center" id="bx4-yG-YDh"/>
+                        <label width="134" height="36" alignment="center" text="SushiWatch" textAlignment="center" numberOfLines="2" id="bx4-yG-YDh">
+                            <gestureRecognizers>
+                                <tapGestureRecognizer numberOfTapsRequired="2" id="Q7n-7P-Axc">
+                                    <connections>
+                                        <action selector="gesturePause:" destination="AgC-eL-Hgc" id="6aF-Ng-io6"/>
+                                    </connections>
+                                </tapGestureRecognizer>
+                                <swipeGestureRecognizer id="gDB-D8-JAm">
+                                    <connections>
+                                        <action selector="gestureSwipeResume:" destination="AgC-eL-Hgc" id="i2g-wk-jrw"/>
+                                    </connections>
+                                </swipeGestureRecognizer>
+                            </gestureRecognizers>
+                        </label>
                         <group width="1" height="35" alignment="left" id="dfe-Ut-v05">
                             <items>
                                 <button width="0.40000000000000002" height="1" alignment="left" backgroundImage="left" id="ss3-i8-6Jh">
@@ -43,6 +56,7 @@
                         <outlet property="btnMoreTimeOutlet" destination="P8P-Qz-hs3" id="VAu-JJ-aET"/>
                         <outlet property="btnMoveRight" destination="lFS-iO-vKm" id="84N-8v-Y8X"/>
                         <outlet property="btnMoveleft" destination="ss3-i8-6Jh" id="046-XU-Qtm"/>
+                        <outlet property="lblGameState" destination="bx4-yG-YDh" id="vKO-mH-Ai7"/>
                         <outlet property="lblTimeRemaining" destination="Tut-E1-Cyu" id="cSu-9d-mbR"/>
                     </connections>
                 </controller>
