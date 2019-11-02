@@ -14,7 +14,7 @@
             <objects>
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="SushiWatch" customModuleProvider="target">
                     <items>
-                        <label width="134" height="36" alignment="center" text="SushiWatch" textAlignment="center" numberOfLines="2" id="bx4-yG-YDh">
+                        <label height="45" alignment="center" text="SushiWatch" textAlignment="center" numberOfLines="2" id="bx4-yG-YDh">
                             <gestureRecognizers>
                                 <tapGestureRecognizer numberOfTapsRequired="2" id="Q7n-7P-Axc">
                                     <connections>

@@ -107,13 +107,14 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     }
     
     @IBAction func gesturePause(_ sender: Any) {
+        // Double tap to resume game
         if (WCSession.default.isReachable) {
             print("Phone reachable")
             let message = ["pause": "yes"]
             WCSession.default.sendMessage(message, replyHandler: nil)
             // output a debug message to the console
             print("sent pause request to phone")
-            self.lblGameState.setText("Paused! Swipe to Resume")
+            self.lblGameState.setText("Paused! Swipe Right to Resume")
         }
         else {
             print("WATCH: Cannot reach phone")
@@ -121,6 +122,20 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     }
     
     
+    @IBAction func gestureSwipeResume(_ sender: Any) {
+        //Swipe right to resume game
+        if (WCSession.default.isReachable) {
+            print("Phone reachable")
+            let message = ["resume": "yes"]
+            WCSession.default.sendMessage(message, replyHandler: nil)
+            // output a debug message to the console
+            print("sent resume request to phone")
+            self.lblGameState.setText("Sushi Watch")
+        }
+        else {
+            print("WATCH: Cannot reach phone")
+        }
+    }
     
     @IBAction func btnLeftClick() {
         if (WCSession.default.isReachable) {

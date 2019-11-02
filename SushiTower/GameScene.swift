@@ -57,8 +57,14 @@ class GameScene: SKScene, WCSessionDelegate {
                 //Pause the Game as per Watch Command
                 self.secondsRemainingLabel.text = "GAME PAUSED"
                 self.scene!.view?.isPaused = true
+    
+            }
+            
+            if (message.keys.contains("resume")){
+                //Resume the Game as per Watch Command
+                self.secondsRemainingLabel.text = "\(self.SecondsRemaining)"
+                self.scene!.view?.isPaused = false
                 
-
             }
         }
     }
