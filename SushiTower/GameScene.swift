@@ -9,6 +9,7 @@
 import SpriteKit
 import GameplayKit
 import WatchConnectivity
+import FirebaseDatabase
 
 class GameScene: SKScene, WCSessionDelegate {
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
@@ -68,9 +69,13 @@ class GameScene: SKScene, WCSessionDelegate {
             }
             
             if (message.keys.contains("playerName")){
+                //var gameCount = 1
                 //recieve the player name from Watch
                 let playerName = message["playerName"] as! String
-                
+
+//                self.ref.child("Players").child(playerName).childByAutoId().setValue(["score":"\(self.score)"])
+                //self.ref.child("ScoreBoard").setValue(["playerName":"\(playerName)","score":"\(self.score)"])
+                self.ref.child("Players").child(playerName).child("Scores").childByAutoId().setValue(self.score)
                 
             }
         }
@@ -103,6 +108,10 @@ class GameScene: SKScene, WCSessionDelegate {
     // Random number between 5 and 23 at which the powerup would be sent to watch
     var randomNum = Int.random(in: 5...23)
     
+    //Declare Firebase Databse reference
+    var ref: DatabaseReference!
+    
+    
     
     func spawnSushi() {
         
@@ -134,6 +143,9 @@ class GameScene: SKScene, WCSessionDelegate {
     }
     
     override func didMove(to view: SKView) {
+        
+        // initilize firebase referenee
+        ref = Database.database().reference()
         
         
         DispatchQueue.main.async {
