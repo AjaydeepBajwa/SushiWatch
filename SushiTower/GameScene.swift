@@ -53,6 +53,7 @@ class GameScene: SKScene, WCSessionDelegate {
     var moveDirection = "left"
     var updateCount = 1
     var SecondsRemaining = 25
+    var moreTime = [String]()
     
     
     func spawnSushi() {
@@ -168,6 +169,7 @@ class GameScene: SKScene, WCSessionDelegate {
             self.timeBar.size.width = self.timeBar.size.width - 8
             self.timeBar.position.x = self.timeBar.position.x - 4
             self.sendTimeWarningTowatch()
+            self.askMoreTime()
         }
         if SecondsRemaining == 0 {
             scene!.view?.isPaused = true
@@ -175,6 +177,25 @@ class GameScene: SKScene, WCSessionDelegate {
             self.secondsRemainingLabel.text = "GAME OVER"
         }
         
+    }
+    
+    public func askMoreTime(){
+        //Send More time powerup request to Watch
+        if (self.SecondsRemaining == 18)||(self.SecondsRemaining == 8){
+            if (WCSession.default.isReachable) {
+                print("Watch reachable")
+                let message = ["moreTime": "10 seconds more?"]
+//                WCSession.default.sendMessage(message, replyHandler: { (response) in
+//                    self.moreTime.append("Reply: \(response)")
+//                })
+                WCSession.default.sendMessage(message, replyHandler: nil)
+                // output a debug message to the console
+                print("sent more time request to watch")
+            }
+            else {
+                print("WATCH: Cannot reach watch")
+            }
+        }
     }
     
     public func sendTimeWarningTowatch(){

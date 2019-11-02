@@ -17,6 +17,9 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     @IBOutlet weak var btnMoveRight: WKInterfaceButton!
     @IBOutlet weak var lblTimeRemaining: WKInterfaceLabel!
     
+    @IBOutlet weak var btnMoreTimeOutlet: WKInterfaceButton!
+    @IBAction func btnMoreTime() {
+    }
     var timeRemaining = 25
     
     func session(_ session: WCSession, activationDidCompleteWith activationState: WCSessionActivationState, error: Error?) {
@@ -41,28 +44,41 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
 
     func session(_ session: WCSession, didReceiveMessage message: [String : Any]) {
 
-        let messageBody = message["timeRemaining"] as! Int
-        self.timeRemaining = messageBody
-        print("WATCH: Got message from Phone = \(messageBody)")
-      
-        
-        if messageBody == 0 {
-            self.lblTimeRemaining.setHidden(false)
-            self.lblTimeRemaining.setText("GAME OVER")
-            self.btnMoveleft.setHidden(true)
-            self.btnMoveRight.setHidden(true)
-        }
-        else {
-            self.lblTimeRemaining.setHidden(false)
-            self.lblTimeRemaining.setText("\(messageBody) Seconds Remaining")
+        if (message.keys.contains("timeRemaining")){
             
-            //Hide time remaining label after 2 seconds of recieving message
-            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-                self.lblTimeRemaining.setHidden(true)
+            let messageBody = message["timeRemaining"] as! Int
+            self.timeRemaining = messageBody
+            print("WATCH: Got message from Phone = \(messageBody)")
+            
+            
+            if messageBody == 0 {
+                self.lblTimeRemaining.setHidden(false)
+                self.lblTimeRemaining.setText("GAME OVER")
+                self.btnMoveleft.setHidden(true)
+                self.btnMoveRight.setHidden(true)
+            }
+            else {
+                self.lblTimeRemaining.setHidden(false)
+                self.lblTimeRemaining.setText("\(messageBody) Seconds Remaining")
+                
+                //Hide time remaining label after 2 seconds of recieving message
+                DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+                    self.lblTimeRemaining.setHidden(true)
+                }
             }
         }
         
-       
+
+        
+        if message.keys.contains("moreTime"){
+            //Hide time remaining label after 2 seconds of recieving message
+            self.btnMoreTimeOutlet.setHidden(false)
+            DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+               self.btnMoreTimeOutlet.setHidden(true)
+            }
+            
+            
+        }
         
         }
     

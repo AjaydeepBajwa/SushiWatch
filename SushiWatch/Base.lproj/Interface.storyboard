@@ -33,8 +33,14 @@
                             <color key="textColor" red="0.88235294119999996" green="0.023529411760000001" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="font" type="system" pointSize="14"/>
                         </label>
+                        <button width="1" alignment="left" hidden="YES" title="More time?" id="P8P-Qz-hs3">
+                            <connections>
+                                <action selector="btnMoreTime" destination="AgC-eL-Hgc" id="lF2-CF-jxo"/>
+                            </connections>
+                        </button>
                     </items>
                     <connections>
+                        <outlet property="btnMoreTimeOutlet" destination="P8P-Qz-hs3" id="VAu-JJ-aET"/>
                         <outlet property="btnMoveRight" destination="lFS-iO-vKm" id="84N-8v-Y8X"/>
                         <outlet property="btnMoveleft" destination="ss3-i8-6Jh" id="046-XU-Qtm"/>
                         <outlet property="lblTimeRemaining" destination="Tut-E1-Cyu" id="cSu-9d-mbR"/>
