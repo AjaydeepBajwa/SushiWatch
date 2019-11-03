@@ -80,7 +80,7 @@ class GameScene: SKScene, WCSessionDelegate {
                 
                 }
 
-                self.ref.child("ScoreBoard").childByAutoId().setValue(["playerName":"\(playerName)","score":"\(self.score)"])
+                self.ref.child("ScoreBoard").childByAutoId().setValue(["playerName":"\(playerName)","score":"\(String(format: "%03d", self.score))"])
             
             }
         }
@@ -218,12 +218,12 @@ class GameScene: SKScene, WCSessionDelegate {
         self.secondsRemainingLabel.fontColor = UIColor.white
         addChild(secondsRemainingLabel)
         
-        self.highScoresBtn.position = CGPoint(x: self.size.width - 50, y: self.size.height - 150)
-        self.highScoresBtn.name = "highScores"
-        self.highScoresBtn.fontName = "Avenir"
-        self.highScoresBtn.fontSize = 30
-        self.highScoresBtn.fontColor = UIColor.yellow
-        addChild(highScoresBtn)
+//        self.highScoresBtn.position = CGPoint(x: self.size.width - 50, y: self.size.height - 150)
+//        self.highScoresBtn.name = "highScores"
+//        self.highScoresBtn.fontName = "Avenir"
+//        self.highScoresBtn.fontSize = 30
+//        self.highScoresBtn.fontColor = UIColor.yellow
+//        addChild(highScoresBtn)
     }
     
     func buildTower() {
@@ -250,6 +250,16 @@ class GameScene: SKScene, WCSessionDelegate {
             print("powerUp count: \(self.powerUpCount)")
         }
         if SecondsRemaining == 0 {
+            
+            //Show HighScores Button
+            self.highScoresBtn.position = CGPoint(x: self.size.width/2, y: self.size.height/2)
+            self.highScoresBtn.name = "highScores"
+            self.highScoresBtn.fontName = "Copperplate-Bold"
+            self.highScoresBtn.fontSize = 40
+            self.highScoresBtn.fontColor = UIColor.red
+            self.highScoresBtn.zPosition = 30
+            addChild(highScoresBtn)
+
             //Pause the Game if seconds remaining = 0 and show "GAME OVER" on phone
             scene!.view?.isPaused = true
             self.secondsRemainingLabel.fontColor = UIColor.red
