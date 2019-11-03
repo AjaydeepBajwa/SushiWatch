@@ -14,7 +14,7 @@
             <objects>
                 <controller id="AgC-eL-Hgc" customClass="InterfaceController" customModule="SushiWatch" customModuleProvider="target">
                     <items>
-                        <label height="45" alignment="center" text="SushiWatch" textAlignment="center" numberOfLines="2" id="bx4-yG-YDh">
+                        <label height="45" alignment="center" text="Double tap to pause Sushi Tower" textAlignment="center" numberOfLines="2" id="bx4-yG-YDh">
                             <gestureRecognizers>
                                 <tapGestureRecognizer numberOfTapsRequired="2" id="Q7n-7P-Axc">
                                     <connections>
@@ -27,6 +27,7 @@
                                     </connections>
                                 </swipeGestureRecognizer>
                             </gestureRecognizers>
+                            <fontDescription key="font" type="system" pointSize="11"/>
                         </label>
                         <group width="1" height="35" alignment="left" id="dfe-Ut-v05">
                             <items>
@@ -43,6 +44,13 @@
                             </items>
                         </group>
                         <label height="17" alignment="center" textAlignment="center" id="Tut-E1-Cyu">
+                            <gestureRecognizers>
+                                <tapGestureRecognizer enabled="NO" numberOfTapsRequired="2" id="ffS-nC-lMb">
+                                    <connections>
+                                        <action selector="dblTapToSeeScoreBoard:" destination="AgC-eL-Hgc" id="UUQ-wr-r2K"/>
+                                    </connections>
+                                </tapGestureRecognizer>
+                            </gestureRecognizers>
                             <color key="textColor" red="0.88235294119999996" green="0.023529411760000001" blue="0.078431372550000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             <fontDescription key="font" type="system" pointSize="14"/>
                         </label>
@@ -64,6 +72,7 @@
                         <outlet property="btnMoveleft" destination="ss3-i8-6Jh" id="046-XU-Qtm"/>
                         <outlet property="lblGameState" destination="bx4-yG-YDh" id="vKO-mH-Ai7"/>
                         <outlet property="lblTimeRemaining" destination="Tut-E1-Cyu" id="cSu-9d-mbR"/>
+                        <outlet property="tapToSeeScoreOutlet" destination="ffS-nC-lMb" id="t8a-Lv-Zdc"/>
                     </connections>
                 </controller>
             </objects>

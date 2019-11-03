@@ -75,13 +75,13 @@ class GameScene: SKScene, WCSessionDelegate {
                 //recieve the player name from Watch
                 let playerName = message["playerName"] as! String
                 
-                //if self.ref.child("Players")
-                self.databaseHandle = self.ref.child("ScoreBoard").observe(.value) { (snapshot) in
-                
-                }
-
+                //Send score and name to cloud database
                 self.ref.child("ScoreBoard").childByAutoId().setValue(["playerName":"\(playerName)","score":"\(String(format: "%03d", self.score))"])
             
+            }
+             if (message.keys.contains("seeScoreBoard")){
+                //Show High Scores Screen.
+                self.showHighScores()
             }
         }
     }
@@ -101,7 +101,7 @@ class GameScene: SKScene, WCSessionDelegate {
     let scoreLabel = SKLabelNode(text:"Score: ")
     let secondsRemainingLabel = SKLabelNode(text: "25")
     var timeBar:SKSpriteNode!
-    var highScoresBtn = SKLabelNode(text: "HighScores")
+    var highScoresBtn = SKLabelNode(text: "See HighScores")
     
     var lives = 5
     var score = 0
@@ -212,7 +212,7 @@ class GameScene: SKScene, WCSessionDelegate {
         addChild(timeBar)
         
         self.secondsRemainingLabel.position = CGPoint(x: 105, y: self.size.height - 90)
-        self.secondsRemainingLabel.fontName = "Avenir"
+        self.secondsRemainingLabel.fontName = "Copperplate-Bold"
         self.secondsRemainingLabel.fontSize = 30
         self.secondsRemainingLabel.zPosition = 22
         self.secondsRemainingLabel.fontColor = UIColor.white
@@ -400,6 +400,14 @@ class GameScene: SKScene, WCSessionDelegate {
         }
     }
     
+    public func showHighScores(){
+        //Go to High Scores screen/View controller
+        let highScoreSB: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        let highScoreVC = highScoreSB.instantiateViewController(withIdentifier: "scoresScreen") as! ScoresViewController
+        let currentViewController:UIViewController=UIApplication.shared.keyWindow!.rootViewController!
+        currentViewController.present(highScoreVC, animated: true, completion: nil)
+    }
+    
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         
@@ -431,12 +439,8 @@ class GameScene: SKScene, WCSessionDelegate {
         }
         let nodeTouched = atPoint(mousePosition).name
         if (nodeTouched == "highScores") {
-            
-            //Go to High Scores screen/View controller
-            let highScoreSB: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-            let highScoreVC = highScoreSB.instantiateViewController(withIdentifier: "scoresScreen") as! ScoresViewController
-            let currentViewController:UIViewController=UIApplication.shared.keyWindow!.rootViewController!
-            currentViewController.present(highScoreVC, animated: true, completion: nil)
+            //Show Score Board Screen
+            self.showHighScores()
         }
 
        

@@ -23,6 +23,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
     
     @IBOutlet weak var btnEnterNameOutlet: WKInterfaceButton!
     
+    @IBOutlet weak var tapToSeeScoreOutlet: WKTapGestureRecognizer!
     
     var timeRemaining = 25
     var playerName = ""
@@ -136,7 +137,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
             WCSession.default.sendMessage(message, replyHandler: nil)
             // output a debug message to the console
             print("sent resume request to phone")
-            self.lblGameState.setText("Sushi Watch")
+            self.lblGameState.setText("Double tap to pause Sushi Tower")
         }
         else {
             print("WATCH: Cannot reach phone")
@@ -156,13 +157,16 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 // Limit the Player Name to Maximum 3 Characters
                 if ((userResponse!.count) > 3){
                     let indexEndOfText = userResponse!.index(userResponse!.startIndex, offsetBy: 2)
-                    self.btnEnterNameOutlet.setTitle("\(userResponse![...indexEndOfText])")
+                    //self.btnEnterNameOutlet.setTitle("\(userResponse![...indexEndOfText])")
                     print("\(self.btnEnterNameOutlet!)")
                     self.playerName = String(userResponse![...indexEndOfText])
+                    self.playerName = self.playerName.uppercased()
+                    self.btnEnterNameOutlet.setTitle("Name: \(self.playerName)")
                 }
                 else {
                     self.playerName = userResponse!
-                    self.btnEnterNameOutlet.setTitle("Name: \(userResponse!)")
+                    self.playerName = self.playerName.uppercased()
+                    self.btnEnterNameOutlet.setTitle("Name: \(self.playerName)")
                 }
                 
                 
@@ -178,10 +182,24 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 }
                 // Disable Enter Name Button after entering name, so that user cannot send same score twice to database.
                 self.btnEnterNameOutlet.setEnabled(false)
+                self.tapToSeeScoreOutlet.isEnabled = true
+                self.lblTimeRemaining.setText("Double Tap for Score")
             }
         }
     }
     
+    @IBAction func dblTapToSeeScoreBoard(_ sender: Any) {
+        if (WCSession.default.isReachable) {
+            print("phone reachable")
+            let message = ["seeScoreBoard": "yes"]
+            WCSession.default.sendMessage(message, replyHandler: nil)
+            // output a debug message to the console
+            print("sent ScoreBoard request to phone")
+        }
+        else {
+            print("WATCH: Cannot reach phone")
+        }
+    }
     
     @IBAction func btnLeftClick() {
         if (WCSession.default.isReachable) {
