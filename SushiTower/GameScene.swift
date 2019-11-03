@@ -189,7 +189,7 @@ class GameScene: SKScene, WCSessionDelegate {
         self.buildTower()
         
         // Game labels
-        self.scoreLabel.position.x = 60
+        self.scoreLabel.position.x = 70
         self.scoreLabel.position.y = size.height - 150
         self.scoreLabel.fontName = "Avenir"
         self.scoreLabel.fontSize = 30
@@ -198,13 +198,13 @@ class GameScene: SKScene, WCSessionDelegate {
         addChild(scoreLabel)
         
         // Life label
-        self.lifeLabel.position.x = 60
-        self.lifeLabel.position.y = size.height - 200
-        self.lifeLabel.fontName = "Avenir"
-        self.lifeLabel.fontSize = 30
-        self.lifeLabel.zPosition = 18
-        self.lifeLabel.fontColor = UIColor.green
-        addChild(lifeLabel)
+//        self.lifeLabel.position.x = 60
+//        self.lifeLabel.position.y = size.height - 200
+//        self.lifeLabel.fontName = "Avenir"
+//        self.lifeLabel.fontSize = 30
+//        self.lifeLabel.zPosition = 18
+//        self.lifeLabel.fontColor = UIColor.green
+//        addChild(lifeLabel)
         
         self.timeBar = SKSpriteNode(imageNamed: "timeBar")
         self.timeBar.position = CGPoint(x: self.size.width/2, y: self.size.height - 80)
@@ -218,12 +218,6 @@ class GameScene: SKScene, WCSessionDelegate {
         self.secondsRemainingLabel.fontColor = UIColor.white
         addChild(secondsRemainingLabel)
         
-//        self.highScoresBtn.position = CGPoint(x: self.size.width - 50, y: self.size.height - 150)
-//        self.highScoresBtn.name = "highScores"
-//        self.highScoresBtn.fontName = "Avenir"
-//        self.highScoresBtn.fontSize = 30
-//        self.highScoresBtn.fontColor = UIColor.yellow
-//        addChild(highScoresBtn)
     }
     
     func buildTower() {

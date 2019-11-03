@@ -162,7 +162,7 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 }
                 else {
                     self.playerName = userResponse!
-                    self.btnEnterNameOutlet.setTitle("\(userResponse!)")
+                    self.btnEnterNameOutlet.setTitle("Name: \(userResponse!)")
                 }
                 
                 
@@ -176,6 +176,8 @@ class InterfaceController: WKInterfaceController, WCSessionDelegate {
                 else {
                     print("WATCH: Cannot reach phone")
                 }
+                // Disable Enter Name Button after entering name, so that user cannot send same score twice to database.
+                self.btnEnterNameOutlet.setEnabled(false)
             }
         }
     }
