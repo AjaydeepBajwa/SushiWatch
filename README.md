@@ -1,6 +1,7 @@
 
 # Name - Ajaydeep Singh
-# Student ID - C0744219
+
+# Use your own 'GoogleService-Info.plist' file to run the project.
 
 #SCREENSHOTS
 
